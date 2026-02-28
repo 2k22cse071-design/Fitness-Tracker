@@ -1,11 +1,26 @@
 import React from 'react';
 
-const Navbar = () => {
+const Navbar = ({ activeTab, setActiveTab }) => {
     return (
         <nav style={styles.nav}>
             <div style={styles.container}>
-                <h1 style={styles.logo}>FitTrack</h1>
-                <p style={styles.tagline}>Track your progress</p>
+                <div style={styles.brand}>
+                    <h1 style={styles.logoText}>FitTrack</h1>
+                </div>
+                <div style={styles.navLinks}>
+                    {['home', 'planner', 'tracker', 'stats'].map((tab) => (
+                        <button
+                            key={tab}
+                            style={{
+                                ...styles.navBtn,
+                                ...(activeTab === tab ? styles.activeBtn : {})
+                            }}
+                            onClick={() => setActiveTab(tab)}
+                        >
+                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                        </button>
+                    ))}
+                </div>
             </div>
         </nav>
     );
@@ -17,24 +32,42 @@ const styles = {
         borderBottom: '1px solid #e5e7eb',
         padding: '1rem 0',
         marginBottom: '2rem',
-        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
     },
     container: {
         maxWidth: '800px',
         margin: '0 auto',
-        padding: '0 2rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        padding: '0 1rem',
     },
-    logo: {
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-        color: '#4f46e5',
+    brand: {
+        display: 'flex',
+        alignItems: 'center',
     },
-    tagline: {
+    logoText: {
+        fontSize: '1.25rem',
+        fontWeight: '700',
+        color: '#111827',
+        margin: 0,
+    },
+    navLinks: {
+        display: 'flex',
+        gap: '0.5rem',
+    },
+    navBtn: {
+        background: 'none',
+        border: 'none',
         color: '#6b7280',
         fontSize: '0.875rem',
+        fontWeight: '500',
+        cursor: 'pointer',
+        padding: '0.5rem 1rem',
+        borderRadius: '0.375rem',
+    },
+    activeBtn: {
+        color: '#111827',
+        backgroundColor: '#f3f4f6',
     }
 };
 

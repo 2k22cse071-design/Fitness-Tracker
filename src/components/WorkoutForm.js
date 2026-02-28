@@ -17,7 +17,12 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!workout.name || !workout.duration || !workout.date) return;
+
+        // Basic Validation
+        if (!workout.name.trim() || !workout.duration || !workout.date) {
+            alert("Please fill in all fields correctly!");
+            return;
+        }
 
         if (editingWorkout) {
             editWorkout(workout);
@@ -25,6 +30,7 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
             addWorkout({ ...workout, id: Date.now() });
         }
 
+        // Clear Form after submit
         setWorkout({ name: '', duration: '', date: '' });
     };
 
@@ -35,7 +41,7 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
 
     return (
         <div style={styles.card}>
-            <h2 style={styles.title}>{editingWorkout ? 'Edit Workout' : 'Add New Workout'}</h2>
+            <h2 style={styles.title}>{editingWorkout ? '📝 Edit Workout' : '🆕 Add New Workout'}</h2>
             <form onSubmit={handleSubmit} style={styles.form}>
                 <div style={styles.inputGroup}>
                     <label style={styles.label}>Workout Name</label>
@@ -44,7 +50,7 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
                         placeholder="e.g. Running, Yoga"
                         value={workout.name}
                         onChange={(e) => setWorkout({ ...workout, name: e.target.value })}
-                        className="input"
+                        className="input-field"
                     />
                 </div>
                 <div style={styles.inputGroup}>
@@ -54,7 +60,7 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
                         placeholder="30"
                         value={workout.duration}
                         onChange={(e) => setWorkout({ ...workout, duration: e.target.value })}
-                        className="input"
+                        className="input-field"
                     />
                 </div>
                 <div style={styles.inputGroup}>
@@ -63,7 +69,7 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
                         type="date"
                         value={workout.date}
                         onChange={(e) => setWorkout({ ...workout, date: e.target.value })}
-                        className="input"
+                        className="input-field"
                     />
                 </div>
                 <div style={styles.buttonGroup}>
@@ -83,15 +89,16 @@ const WorkoutForm = ({ addWorkout, editWorkout, editingWorkout, setEditingWorkou
 
 const styles = {
     card: {
-        background: 'white',
+        background: '#ffffff',
         padding: '2rem',
-        borderRadius: '0.5rem',
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+        borderRadius: '0.75rem',
+        border: '1px solid #e5e7eb',
         marginBottom: '2rem',
     },
     title: {
         marginBottom: '1.5rem',
         fontSize: '1.25rem',
+        fontWeight: '600',
         color: '#111827',
     },
     form: {
@@ -117,22 +124,27 @@ const styles = {
     submitBtn: {
         backgroundColor: '#4f46e5',
         color: 'white',
-        padding: '0.75rem 1.5rem',
+        padding: '0.625rem 1rem',
         flex: 1,
         border: 'none',
         borderRadius: '0.375rem',
         cursor: 'pointer',
         fontWeight: '500',
+        fontSize: '0.875rem',
     },
     cancelBtn: {
-        backgroundColor: '#f3f4f6',
+        backgroundColor: '#ffffff',
         color: '#374151',
-        padding: '0.75rem 1.5rem',
+        padding: '0.625rem 1rem',
         border: '1px solid #e5e7eb',
         borderRadius: '0.375rem',
         cursor: 'pointer',
         fontWeight: '500',
+        fontSize: '0.875rem',
     }
 };
 
+
+
 export default WorkoutForm;
+
